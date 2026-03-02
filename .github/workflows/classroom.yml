@@ -45,10 +45,10 @@ jobs:
           fi
 
           echo "Checking page content..."
-          curl -s "$URL" | grep -q "CSC309"
+          BODY=$(curl -s --max-time 10 "$URL" | head -n 2000)
 
-          if [ $? -ne 0 ]; then
-            echo "Expected content 'CSC309' not found"
+          if [[ "$BODY" != *"CSC309"* ]]; then
+            echo "Expected content not found"
             exit 1
           fi
 
